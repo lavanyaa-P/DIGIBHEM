@@ -43,10 +43,8 @@ function createTaskElement(taskText, addedAt, completedAt = null) {
   li.appendChild(timestampSpan);
   li.appendChild(actionsDiv);
 
-  // Handle Edit
   editBtn.addEventListener('click', () => {
     if (editBtn.textContent === '✏️') {
-      // Change to save mode
       const input = document.createElement('input');
       input.type = 'text';
       input.value = textSpan.textContent;
@@ -55,7 +53,6 @@ function createTaskElement(taskText, addedAt, completedAt = null) {
       editBtn.textContent = '💾';
       input.focus();
     } else {
-      // Save edited task
       const input = li.querySelector('.edit-input');
       if (input.value.trim() === '') {
         alert('Task cannot be empty.');
@@ -68,15 +65,13 @@ function createTaskElement(taskText, addedAt, completedAt = null) {
     }
   });
 
-  // Handle Delete
   deleteBtn.addEventListener('click', () => {
     li.remove();
   });
 
-  // Handle Complete / Pending Toggle
+
   completeBtn.addEventListener('click', () => {
     if (!completedAt) {
-      // Mark complete
       textSpan.classList.add('completed');
       timestampSpan.textContent = `Completed: ${formatDate(new Date())}`;
       completedList.appendChild(li);
@@ -84,7 +79,6 @@ function createTaskElement(taskText, addedAt, completedAt = null) {
       completeBtn.title = 'Mark as Pending';
       li.dataset.completedAt = new Date();
     } else {
-      // Mark pending
       textSpan.classList.remove('completed');
       timestampSpan.textContent = `Added: ${addedAt}`;
       pendingList.appendChild(li);
@@ -94,7 +88,6 @@ function createTaskElement(taskText, addedAt, completedAt = null) {
     }
   });
 
-  // Store added date in dataset for toggling
   li.dataset.addedAt = addedAt;
   li.dataset.completedAt = completedAt || '';
 
